@@ -4,7 +4,10 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import todoApp from './reducers';
 import App from './components/App';
-import './index.css';
+
+import './css/normalize.css';
+import './css/skeleton.css';
+import './css/index.css';
 
 let store = createStore(todoApp);
 

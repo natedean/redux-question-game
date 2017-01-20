@@ -6,7 +6,7 @@ let AddTodo = ({ dispatch }) => {
   let input;
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '1em' }}>
       <form onSubmit={e => {
         e.preventDefault();
         if (!input.value.trim()) { return; }
@@ -14,9 +14,12 @@ let AddTodo = ({ dispatch }) => {
         dispatch(addTodo(input.value));
         input.value = '';
       }}>
-        <input ref={node => {
-          input = node;
-        }}/>
+        <input type="text"
+               placeholder="do laundry..."
+               style={{ display: 'block' }}
+               ref={node => {
+                  input = node;
+                }}/>
         <button type="submit">
           Add Todo
         </button>
