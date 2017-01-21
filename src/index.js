@@ -9,7 +9,11 @@ import './css/normalize.css';
 import './css/skeleton.css';
 import './css/index.css';
 
-let store = createStore(todoApp);
+const defaultState = {
+  questions: ['first question', 'second question']
+};
+
+let store = createStore(todoApp, defaultState);
 
 render(
   <Provider store={store}>

@@ -16,3 +16,8 @@ export const toggleTodo = (id) => ({
   id
 });
 
+export const addCorrectAnswer = (id) => ({
+  type: 'ADD_CORRECT_ANSWER',
+  payload: id
+});
+
