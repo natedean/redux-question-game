@@ -1,9 +1,16 @@
 import { connect } from 'react-redux';
 import Questions from '../components/Questions';
 
-const mapStateToProps = (state) => ({
-  questions: state.questions
-});
+// THIS IS A TEMP CONTAINER TO DISPLAY ALL REMAINING QUESTIONS
+
+const mapStateToProps = (state) => {
+  const remainingQuestions = state.questions
+    .filter(question => !state.answeredQuestionKeys.includes(question));
+
+  return {
+    questions: remainingQuestions
+  }
+};
 
 const RemainingQuestions = connect(
   mapStateToProps

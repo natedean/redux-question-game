@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 
-const Question = ({ question }) => {
+const Question = ({ question, onClick }) => {
   return (
-    <span>{question}</span>
+    <span onClick={() => onClick(question)}>{question}</span>
   )
 };
 

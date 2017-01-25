@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { addCorrectAnswer } from '../actions/index';
 import Question from '../components/Question';
 
 const mapStateToProps = (state) => {
@@ -10,8 +11,15 @@ const mapStateToProps = (state) => {
   }
 };
 
+const mapDispatchToProps = (dispatch) => ({
+  onClick(id) {
+    dispatch(addCorrectAnswer(id));
+  }
+});
+
 const CurrentQuestion = connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Question);
 
 export default CurrentQuestion;
