@@ -2,7 +2,12 @@ import React, { PropTypes } from 'react';
 
 const Question = ({ question, onClick }) => {
   return (
-    <span onClick={() => onClick(question.text)}>{question.text}</span>
+    <div>
+      <div>{question.text}</div>
+      { question.answers.map((answer) =>
+        <button key={answer.text} onClick={() => onClick(question.text)}>{answer.text}</button>
+      )}
+    </div>
   )
 };
 
