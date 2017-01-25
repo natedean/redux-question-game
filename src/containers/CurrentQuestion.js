@@ -4,7 +4,7 @@ import Question from '../components/Question';
 
 const mapStateToProps = (state) => {
   const remainingQuestions = state.questions
-    .filter(question => !state.answeredQuestionKeys.includes(question));
+    .filter(question => !state.answeredQuestionKeys.includes(question.text));
 
   return {
     question: remainingQuestions[Math.floor(Math.random() * remainingQuestions.length)]

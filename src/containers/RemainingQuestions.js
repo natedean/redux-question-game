@@ -5,7 +5,7 @@ import Questions from '../components/Questions';
 
 const mapStateToProps = (state) => {
   const remainingQuestions = state.questions
-    .filter(question => !state.answeredQuestionKeys.includes(question));
+    .filter(question => !state.answeredQuestionKeys.includes(question.text));
 
   return {
     questions: remainingQuestions
