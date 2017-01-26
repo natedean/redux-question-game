@@ -1,19 +1,27 @@
 import { connect } from 'react-redux';
-import { addCorrectAnswer } from '../actions/index';
+import { correctAnswer, incorrectAnswer } from '../actions/index';
 import Question from '../components/Question';
 
 const mapStateToProps = (state) => {
-  const remainingQuestions = state.questions
-    .filter(question => !state.answeredQuestionKeys.includes(question.text));
+  const remainingQuestions = state.questions.filter(question => {
+    return !state.correctAnswerIds.includes(question.id) && !state.incorrectAnswerIds.includes(question.id);
+  });
+
+  window.console.log('remainingQuestions', remainingQuestions);
+
+  const currQuestion = remainingQuestions[Math.floor(Math.random() * remainingQuestions.length)];
 
   return {
-    question: remainingQuestions[Math.floor(Math.random() * remainingQuestions.length)]
+    question: currQuestion
   }
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onClick(id) {
-    dispatch(addCorrectAnswer(id));
+  onCorrectAnswer(id) {
+    dispatch(correctAnswer(id));
+  },
+  onIncorrectAnswer(id) {
+    dispatch(incorrectAnswer(id))
   }
 });
 

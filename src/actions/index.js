@@ -16,8 +16,13 @@ export const toggleTodo = (id) => ({
   id
 });
 
-export const addCorrectAnswer = (question) => ({
-  type: 'ADD_CORRECT_ANSWER',
-  payload: question
+export const correctAnswer = (id) => ({
+  type: 'CORRECT_ANSWER',
+  payload: id
+});
+
+export const incorrectAnswer = (id) => ({
+  type: 'INCORRECT_ANSWER',
+  payload: id
 });
 

@@ -1,11 +1,14 @@
 import React, { PropTypes } from 'react';
 
-const Question = ({ question, onClick }) => {
+const Question = ({ question, onCorrectAnswer, onIncorrectAnswer }) => {
+
+  const onClick = isCorrectAnswer => isCorrectAnswer ? onCorrectAnswer(question.id) : onIncorrectAnswer(question.id);
+
   return (
     <div>
       <div>{question.text}</div>
       { question.answers.map((answer) =>
-        <button key={answer.text} onClick={() => onClick(question.text)}>{answer.text}</button>
+        <button key={answer.text} onClick={() => onClick(answer.isCorrect)}>{answer.text}</button>
       )}
     </div>
   )
@@ -21,5 +24,6 @@ Question.propTypes = {
       isCorrect: PropTypes.bool
     }).isRequired).isRequired
   }).isRequired,
-  onClick: PropTypes.func.isRequired
+  onCorrectAnswer: PropTypes.func.isRequired,
+  onIncorrectAnswer: PropTypes.func.isRequired
 };
