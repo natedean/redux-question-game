@@ -1,18 +1,22 @@
 import { connect } from 'react-redux';
 import { correctAnswer, incorrectAnswer } from '../actions/index';
 import Question from '../components/Question';
+import shuffle from 'lodash.shuffle';
 
 const mapStateToProps = (state) => {
-  const remainingQuestions = state.questions.filter(question => {
-    return !state.correctAnswerIds.includes(question.id) && !state.incorrectAnswerIds.includes(question.id);
+  const remainingQuestions = Object.keys(state.questions).filter(id => {
+    return !state.correctAnswerIds.includes(id) && !state.incorrectAnswerIds.includes(id);
   });
 
-  window.console.log('remainingQuestions', remainingQuestions);
+  const currQuestion = Object.assign({},
+    state.questions[remainingQuestions[Math.floor(Math.random() * remainingQuestions.length)]]
+  );
 
-  const currQuestion = remainingQuestions[Math.floor(Math.random() * remainingQuestions.length)];
+  const shuffledAnswers = shuffle(currQuestion.answers.slice());
 
   return {
-    question: currQuestion
+    question: currQuestion,
+    answers: shuffledAnswers
   }
 };
 

@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react';
 
-const Question = ({ question, onCorrectAnswer, onIncorrectAnswer }) => {
+import AnswerButtons from './AnswerButtons';
+
+const Question = ({ question, answers, onCorrectAnswer, onIncorrectAnswer }) => {
 
   const onClick = isCorrectAnswer => isCorrectAnswer ? onCorrectAnswer(question.id) : onIncorrectAnswer(question.id);
 
   return (
     <div>
-      <div>{question.text}</div>
-      { question.answers.map((answer) =>
-        <button key={answer.text} onClick={() => onClick(answer.isCorrect)}>{answer.text}</button>
-      )}
+      <h5>{question.text}</h5>
+      <AnswerButtons answers={answers} onClick={onClick} />
     </div>
   )
 };
