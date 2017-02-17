@@ -4,7 +4,9 @@ import AnswerButtons from './AnswerButtons';
 
 const Question = ({ question, answers, onCorrectAnswer, onIncorrectAnswer }) => {
 
-  const onClick = isCorrectAnswer => isCorrectAnswer ? onCorrectAnswer(question.id) : onIncorrectAnswer(question.id);
+  const onClick = isCorrectAnswer => {
+    isCorrectAnswer ? onCorrectAnswer(question.id) : onIncorrectAnswer(question.id);
+  };
 
   return (
     <div>

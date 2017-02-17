@@ -21,6 +21,11 @@ export const correctAnswer = (id) => ({
   payload: id
 });
 
+export const persistScoreUpdate = () => dispatch =>
+  fetch('http://localhost:3001/user/update/gt_user', { method: 'POST' })
+    .then(res => dispatch({ type: 'AWESOME_SAUCE' }))
+    .catch(err => dispatch({ type: 'UPDATE_USER_ERROR' }));
+
 export const incorrectAnswer = (id) => ({
   type: 'INCORRECT_ANSWER',
   payload: id

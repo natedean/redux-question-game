@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { correctAnswer, incorrectAnswer } from '../actions/index';
+import { correctAnswer, incorrectAnswer, persistScoreUpdate } from '../actions/index';
 import Question from '../components/Question';
 import shuffle from 'lodash.shuffle';
 
@@ -8,8 +8,10 @@ const mapStateToProps = (state) => {
     return !state.correctAnswerIds.includes(id) && !state.incorrectAnswerIds.includes(id);
   });
 
+  const currQuestionId = remainingQuestions[Math.floor(Math.random() * remainingQuestions.length)];
+
   const currQuestion = Object.assign({},
-    state.questions[remainingQuestions[Math.floor(Math.random() * remainingQuestions.length)]]
+    state.questions[currQuestionId], { id: currQuestionId }
   );
 
   const shuffledAnswers = shuffle(currQuestion.answers.slice());
@@ -23,6 +25,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   onCorrectAnswer(id) {
     dispatch(correctAnswer(id));
+    dispatch(persistScoreUpdate());
   },
   onIncorrectAnswer(id) {
     dispatch(incorrectAnswer(id))

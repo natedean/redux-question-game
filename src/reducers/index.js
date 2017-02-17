@@ -1,12 +1,10 @@
 import { combineReducers } from 'redux';
-import todos from './todos';
-import visibilityFilter from './visibilityFilter';
 import correctAnswerIds from './correctAnswerIds';
 import incorrectAnswerIds from './incorrectAnswerIds';
+import score from './score';
 
 const todoApp = combineReducers({
-  todos,
-  visibilityFilter,
+  score,
   correctAnswerIds,
   incorrectAnswerIds,
   questions: (state = []) => state
