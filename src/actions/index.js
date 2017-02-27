@@ -21,10 +21,27 @@ export const correctAnswer = (id) => ({
   payload: id
 });
 
-export const persistScoreUpdate = () => dispatch =>
-  fetch('http://localhost:3001/user/update/gt_user', { method: 'POST' })
-    .then(res => dispatch({ type: 'AWESOME_SAUCE' }))
+export const persistAnswer = (questionId, milliseconds, isCorrect) => (dispatch, getState) => {
+  return fetch('https://api.guitarthinker.com/user/answer', {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      userId: getState().userId,
+      isCorrect,
+      questionId,
+      milliseconds
+    })
+  })
+    .then(res => res.json())
+    .then(res => {
+      if (!getState().userId) {
+        dispatch({ type: 'LOAD_USER', user: res });
+      }
+    })
     .catch(err => dispatch({ type: 'UPDATE_USER_ERROR' }));
+};
 
 export const incorrectAnswer = (id) => ({
   type: 'INCORRECT_ANSWER',
