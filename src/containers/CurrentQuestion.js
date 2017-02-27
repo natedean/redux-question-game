@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { correctAnswer, incorrectAnswer, persistAnswer } from '../actions/index';
+import { answerAndPersist } from '../actions/index';
 import Question from '../components/Question';
 import shuffle from 'lodash.shuffle';
 
@@ -27,13 +27,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onCorrectAnswer(questionId, milliseconds) {
-    dispatch(correctAnswer(questionId));
-    dispatch(persistAnswer(questionId, milliseconds, true));
-  },
-  onIncorrectAnswer(questionId, milliseconds) {
-    dispatch(incorrectAnswer(questionId));
-    dispatch(persistAnswer(questionId, milliseconds, false));
+  onAnswer(questionId, isCorrect, milliseconds) {
+    dispatch(answerAndPersist(questionId, isCorrect, milliseconds));
   }
 });
 

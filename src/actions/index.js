@@ -16,12 +16,7 @@ export const toggleTodo = (id) => ({
   id
 });
 
-export const correctAnswer = (id) => ({
-  type: 'CORRECT_ANSWER',
-  payload: id
-});
-
-export const persistAnswer = (questionId, milliseconds, isCorrect) => (dispatch, getState) => {
+export const persistAnswer = (questionId, isCorrect, milliseconds) => (dispatch, getState) => {
   return fetch('https://api.guitarthinker.com/user/answer', {
     method: 'post',
     headers: {
@@ -43,8 +38,14 @@ export const persistAnswer = (questionId, milliseconds, isCorrect) => (dispatch,
     .catch(err => dispatch({ type: 'UPDATE_USER_ERROR' }));
 };
 
-export const incorrectAnswer = (id) => ({
-  type: 'INCORRECT_ANSWER',
-  payload: id
+export const answer = (id, isCorrect, milliseconds) => ({
+  type: 'ANSWER',
+  id,
+  isCorrect
 });
+
+export const answerAndPersist = (id, isCorrect, milliseconds) => dispatch => {
+  dispatch(answer(id, isCorrect, milliseconds));
+  dispatch(persistAnswer(id, isCorrect, milliseconds));
+};
 

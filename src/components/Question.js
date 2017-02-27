@@ -2,11 +2,10 @@ import React, { PropTypes } from 'react';
 
 import AnswerButtons from './AnswerButtons';
 
-const Question = ({ question, answers, onCorrectAnswer, onIncorrectAnswer }) => {
+const Question = ({ question, answers, onAnswer }) => {
 
-  const onClick = isCorrectAnswer => {
-    isCorrectAnswer ? onCorrectAnswer(question.id) : onIncorrectAnswer(question.id);
-  };
+  // fake 1000 millisecond response for now
+  const onClick = isCorrect => onAnswer(question.id, isCorrect, 1000);
 
   return (
     <div>
@@ -26,6 +25,5 @@ Question.propTypes = {
       isCorrect: PropTypes.bool
     }).isRequired).isRequired
   }).isRequired,
-  onCorrectAnswer: PropTypes.func.isRequired,
-  onIncorrectAnswer: PropTypes.func.isRequired
+  onAnswer: PropTypes.func.isRequired
 };
