@@ -1,13 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { answerAndPersist } from '../actions/index';
+import { answerAndPersist, generateAndSetNewQuestion } from '../actions/index';
 import Question from '../components/Question';
 
-const mapStateToProps = (state) => ({ question: state.currentQuestion });
+const mapStateToProps = (state) => ({
+  question: state.currentQuestion,
+  isLimbo: state.isLimbo,
+  incorrectAnswerText: state.incorrectAnswerText
+});
 
 const mapDispatchToProps = (dispatch) => ({
-  onAnswer(questionId, isCorrect, milliseconds) {
-    dispatch(answerAndPersist(questionId, isCorrect, milliseconds));
+  onAnswer(questionId, isCorrect, milliseconds, answerText) {
+    dispatch(answerAndPersist(questionId, isCorrect, milliseconds, answerText));
+  },
+  setNewQuestion() {
+    dispatch(generateAndSetNewQuestion());
   }
 });
 

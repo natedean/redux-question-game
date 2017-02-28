@@ -47,13 +47,6 @@ export const answer = (id, isCorrect, milliseconds) => ({
 
 export const setQuestion = (question) => ({ type: 'SET_QUESTION', question });
 
-export const answerAndPersist = (id, isCorrect, milliseconds) => dispatch => {
-  dispatch(answer(id, isCorrect, milliseconds));
-  dispatch(persistAnswer(id, isCorrect, milliseconds));
-};
-
-console.log('doing more stuff')
-
 export const generateAndSetNewQuestion = () => (dispatch, getState) => {
   console.log('doing stuff')
   // this construct is no good, this 'question' computed prop is now changing everytime ANYTHING in the state changes
@@ -77,5 +70,15 @@ export const generateAndSetNewQuestion = () => (dispatch, getState) => {
   dispatch(setQuestion(newQuestion));
 };
 
-generateAndSetNewQuestion();
+export const setIncorrectAnswerText = (text) => ({ type: 'SET_INCORRECT_ANSWER_TEXT', text });
 
+export const answerAndPersist = (id, isCorrect, milliseconds, answerText) => dispatch => {
+  dispatch(answer(id, isCorrect, milliseconds));
+  dispatch(persistAnswer(id, isCorrect, milliseconds));
+
+  if (isCorrect) {
+    dispatch(generateAndSetNewQuestion());
+  } else {
+    dispatch(setIncorrectAnswerText(answerText));
+  }
+};

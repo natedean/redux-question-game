@@ -2,15 +2,16 @@ import React, { PropTypes } from 'react';
 
 import AnswerButtons from './AnswerButtons';
 
-const Question = ({ question, onAnswer }) => {
+const Question = ({ question, isLimbo, incorrectAnswerText, onAnswer, setNewQuestion }) => {
 
   // fake 1000 millisecond response for now
-  const onClick = isCorrect => onAnswer(question.id, isCorrect, 1000);
+  const onClick = (isCorrect, answerText) => onAnswer(question.id, isCorrect, 1000, answerText);
 
   return (
-    <div>
+    <div className={isLimbo ? '' : 'animateIn'} >
       <h5>{question.text}</h5>
-      <AnswerButtons answers={question.answers} onClick={onClick} />
+      <AnswerButtons answers={question.answers} isLimbo={isLimbo} incorrectAnswerText={incorrectAnswerText} onClick={onClick} />
+      { isLimbo && <button onClick={setNewQuestion}>Next</button> }
     </div>
   )
 };

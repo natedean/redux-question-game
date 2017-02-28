@@ -4,6 +4,8 @@ import incorrectAnswerIds from './incorrectAnswerIds';
 import score from './score';
 import currentQuestion from './currentQuestion';
 import userId from './userId';
+import isLimbo from './isLimbo';
+import incorrectAnswerText from './incorrectAnswerText';
 
 const todoApp = combineReducers({
   score,
@@ -11,7 +13,9 @@ const todoApp = combineReducers({
   correctAnswerIds,
   incorrectAnswerIds,
   userId,
-  questions: (state = []) => state
+  isLimbo,
+  incorrectAnswerText,
+  questions: (state = []) => state,
 });
 
 export default todoApp;
