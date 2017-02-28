@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 import AnswerButtons from './AnswerButtons';
 
-const Question = ({ question, answers, onAnswer }) => {
+const Question = ({ question, onAnswer }) => {
 
   // fake 1000 millisecond response for now
   const onClick = isCorrect => onAnswer(question.id, isCorrect, 1000);
@@ -10,7 +10,7 @@ const Question = ({ question, answers, onAnswer }) => {
   return (
     <div>
       <h5>{question.text}</h5>
-      <AnswerButtons answers={answers} onClick={onClick} />
+      <AnswerButtons answers={question.answers} onClick={onClick} />
     </div>
   )
 };

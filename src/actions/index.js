@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import shuffle from 'lodash.shuffle';
 
 export const addTodo = (text) => ({
   type: 'ADD_TODO',
@@ -44,8 +45,37 @@ export const answer = (id, isCorrect, milliseconds) => ({
   isCorrect
 });
 
+export const setQuestion = (question) => ({ type: 'SET_QUESTION', question });
+
 export const answerAndPersist = (id, isCorrect, milliseconds) => dispatch => {
   dispatch(answer(id, isCorrect, milliseconds));
   dispatch(persistAnswer(id, isCorrect, milliseconds));
 };
+
+console.log('doing more stuff')
+
+export const generateAndSetNewQuestion = () => (dispatch, getState) => {
+  console.log('doing stuff')
+  // this construct is no good, this 'question' computed prop is now changing everytime ANYTHING in the state changes
+  // this is going to have to change to be a thunk from the action { type: 'ANSWER', isCorrect: true|false, questionId }
+  const state = getState();
+
+  const remainingQuestions = Object.keys(state.questions).filter(id => {
+    return !state.correctAnswerIds.includes(id) && !state.incorrectAnswerIds.includes(id);
+  });
+
+  const currQuestionId = remainingQuestions[Math.floor(Math.random() * remainingQuestions.length)];
+
+  const currQuestion = Object.assign({},
+    state.questions[currQuestionId], { id: currQuestionId }
+  );
+
+  const shuffledAnswers = shuffle(currQuestion.answers.slice());
+
+  const newQuestion = Object.assign({}, currQuestion, { answers: shuffledAnswers });
+
+  dispatch(setQuestion(newQuestion));
+};
+
+generateAndSetNewQuestion();
 
