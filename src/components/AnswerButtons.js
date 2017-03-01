@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 
-const AnswerButtons = ({ answers, isLimbo, incorrectAnswerText, onClick }) => {
+const AnswerButtons = ({ answers, isIncorrectLimbo, incorrectAnswerText, onClick }) => {
   return (
     <div>
       { answers.map((answer) =>
             <button style={{ marginLeft: '1em', textTransform: 'none'}}
-                  disabled={isLimbo}
-                  className={constructClassName(answer, incorrectAnswerText, isLimbo)}
+                  disabled={isIncorrectLimbo}
+                  className={constructClassName(answer, incorrectAnswerText, isIncorrectLimbo)}
                   key={answer.text} onClick={() => onClick(answer.isCorrect, answer.text)}>{answer.text}</button>
       )}
     </div>
@@ -20,7 +20,7 @@ AnswerButtons.propTypes = {
     text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     isCorrect: PropTypes.bool
   }).isRequired).isRequired,
-  isLimbo: PropTypes.bool.isRequired,
+  isIncorrectLimbo: PropTypes.bool.isRequired,
   onClick: PropTypes.func
 };
 

@@ -1,4 +1,3 @@
-import { v4 } from 'uuid';
 import shuffle from 'lodash.shuffle';
 
 export const persistAnswer = (questionId, isCorrect, milliseconds) => (dispatch, getState) => {
@@ -61,7 +60,9 @@ export const answerAndPersist = (id, isCorrect, milliseconds, answerText) => dis
   dispatch(persistAnswer(id, isCorrect, milliseconds));
 
   if (isCorrect) {
-    dispatch(generateAndSetNewQuestion());
+    setTimeout(() => {
+      dispatch(generateAndSetNewQuestion());
+    }, 200);
   } else {
     dispatch(setIncorrectAnswerText(answerText));
   }

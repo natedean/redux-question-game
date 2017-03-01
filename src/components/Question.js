@@ -8,10 +8,16 @@ const Question = ({ question, isLimbo, incorrectAnswerText, onAnswer, setNewQues
   const onClick = (isCorrect, answerText) => onAnswer(question.id, isCorrect, 1000, answerText);
 
   return (
-    <div className={isLimbo ? '' : 'animateIn'} >
+    <div className={isLimbo ? '' : 'fadeIn'} >
       <h5>{question.text}</h5>
-      <AnswerButtons answers={question.answers} isLimbo={isLimbo} incorrectAnswerText={incorrectAnswerText} onClick={onClick} />
-      { isLimbo && <button onClick={setNewQuestion} className="nextBtn">Next</button> }
+      <AnswerButtons
+        answers={question.answers}
+        isIncorrectLimbo={isLimbo && !!incorrectAnswerText}
+        incorrectAnswerText={incorrectAnswerText}
+        onClick={onClick}
+      />
+      { (isLimbo && incorrectAnswerText) && <button onClick={setNewQuestion} className="nextBtn">Next</button> }
+      { (isLimbo && incorrectAnswerText) && <div className="fadeIn">Incorrect.</div> }
     </div>
   )
 };

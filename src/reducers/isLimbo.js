@@ -3,7 +3,7 @@ const isLimbo = (state = false, action) => {
     case 'SET_QUESTION':
       return false;
     case 'ANSWER':
-      return action.isCorrect ? false : true;
+      return true;
     default:
       return state;
   }
