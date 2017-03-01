@@ -11,7 +11,7 @@ const Question = ({ question, isLimbo, incorrectAnswerText, onAnswer, setNewQues
     <div className={isLimbo ? '' : 'animateIn'} >
       <h5>{question.text}</h5>
       <AnswerButtons answers={question.answers} isLimbo={isLimbo} incorrectAnswerText={incorrectAnswerText} onClick={onClick} />
-      { isLimbo && <button onClick={setNewQuestion}>Next</button> }
+      { isLimbo && <button onClick={setNewQuestion} className="nextBtn">Next</button> }
     </div>
   )
 };

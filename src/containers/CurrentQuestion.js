@@ -19,13 +19,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 let CurrentQuestion = (props) => {
-
-  if (props.question) {
-    return <Question {...props} />
-  } else {
-    return null;
-  }
-
+  return (
+    <div className="questionContainer" style={{marginTop: '5rem'}}>
+      {props.question && <Question {...props} />}
+    </div>
+  );
 };
 
 CurrentQuestion = connect(
