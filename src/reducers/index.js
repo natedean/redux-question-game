@@ -6,6 +6,7 @@ import currentQuestion from './currentQuestion';
 import userId from './userId';
 import isLimbo from './isLimbo';
 import incorrectAnswerText from './incorrectAnswerText';
+import skill from './skill';
 
 const todoApp = combineReducers({
   score,
@@ -13,6 +14,7 @@ const todoApp = combineReducers({
   correctAnswerIds,
   incorrectAnswerIds,
   userId,
+  skill,
   isLimbo,
   incorrectAnswerText,
   questions: (state = []) => state,

@@ -15,9 +15,7 @@ export const persistAnswer = (questionId, isCorrect, milliseconds) => (dispatch,
   })
     .then(res => res.json())
     .then(res => {
-      if (!getState().userId) {
-        dispatch({ type: 'LOAD_USER', user: res });
-      }
+        dispatch({ type: 'UPDATE_USER_DATA', user: enrichUserResponse(res) });
     })
     .catch(err => dispatch({ type: 'UPDATE_USER_ERROR' }));
 };
@@ -64,3 +62,35 @@ export const answerAndPersist = (id, isCorrect, milliseconds, answerText) => dis
     dispatch(setIncorrectAnswerText(answerText));
   }
 };
+
+// helpers, may move these...
+function enrichUserResponse(res) {
+  const skill = calcUserSkill(res.totalCorrect, res.totalIncorrect);
+  return Object.assign({}, res, { skill });
+}
+
+function calcUserSkill(totalCorrect, totalIncorrect) {
+  const totalAnswered = totalCorrect + totalIncorrect;
+
+  const calcFn = totalAnswered < 5 ? getNewbTotalCalc : getTotalCalc;
+
+  return Math.round(calcFn(totalCorrect, totalAnswered) * 100);
+}
+
+function getNewbTotalCalc(totalCorrect, totalAnswered) {
+  // TODO: adjust calc weights when we get avgSpeed
+  const correctAnswersCalc = (totalCorrect / totalAnswered) * 0.5;
+
+  const newbiePenaltyCalc = (totalCorrect / 5) * 0.5;
+
+  const totalCalc = correctAnswersCalc + newbiePenaltyCalc;
+
+  return totalCalc;
+}
+
+function getTotalCalc(totalCorrect, totalAnswered) {
+  // TODO: adjust calc weights when we get avgSpeed
+  const correctAnswersCalc = (totalCorrect / totalAnswered) * 1;
+
+  return correctAnswersCalc;
+}
