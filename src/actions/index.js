@@ -31,9 +31,6 @@ export const answer = (id, isCorrect, milliseconds) => ({
 export const setQuestion = (question) => ({ type: 'SET_QUESTION', question });
 
 export const generateAndSetNewQuestion = () => (dispatch, getState) => {
-  console.log('doing stuff')
-  // this construct is no good, this 'question' computed prop is now changing everytime ANYTHING in the state changes
-  // this is going to have to change to be a thunk from the action { type: 'ANSWER', isCorrect: true|false, questionId }
   const state = getState();
 
   const remainingQuestions = Object.keys(state.questions).filter(id => {
