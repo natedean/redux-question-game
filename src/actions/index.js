@@ -1,18 +1,20 @@
 import shuffle from 'lodash.shuffle';
 
+export const setQuestionsBank = (questions) => ({ type: 'SET_QUESTIONS_BANK', questions });
+
 export const persistAnswer = (questionId, isCorrect, milliseconds) => (dispatch, getState) => {
-  return fetch('https://api.guitarthinker.com/user/answer', {
+  return fetch(`${process.env.REACT_APP_API_URI}/user/answer`, {
     method: 'post',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      userId: getState().userId,
-      isCorrect,
-      questionId,
-      milliseconds
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userId: getState().userId,
+        isCorrect,
+        questionId,
+        milliseconds
+      })
     })
-  })
     .then(res => res.json())
     .then(res => {
         dispatch({ type: 'UPDATE_USER_DATA', user: enrichUserResponse(res) });
@@ -20,7 +22,7 @@ export const persistAnswer = (questionId, isCorrect, milliseconds) => (dispatch,
     .catch(err => dispatch({ type: 'UPDATE_USER_ERROR' }));
 };
 
-export const answer = (id, isCorrect, milliseconds) => ({
+export const answer = (id, isCorrect) => ({
   type: 'ANSWER',
   id,
   isCorrect
@@ -28,18 +30,22 @@ export const answer = (id, isCorrect, milliseconds) => ({
 
 export const setQuestion = (question) => ({ type: 'SET_QUESTION', question });
 
+export const resetAnswers = () => ({ type: 'RESET_ANSWERS' });
+
 export const generateAndSetNewQuestion = () => (dispatch, getState) => {
   const state = getState();
 
-  const remainingQuestions = Object.keys(state.questions).filter(id => {
-    return !state.correctAnswerIds.includes(id) && !state.incorrectAnswerIds.includes(id);
-  });
+  const remainingQuestions = getRemainingQuestions(state);
+
+  if (!remainingQuestions.length) {
+    dispatch(resetAnswers());
+    dispatch(generateAndSetNewQuestion());
+    return;
+  }
 
   const currQuestionId = remainingQuestions[Math.floor(Math.random() * remainingQuestions.length)];
 
-  const currQuestion = Object.assign({},
-    state.questions[currQuestionId], { id: currQuestionId }
-  );
+  const currQuestion = Object.assign({}, state.questions[currQuestionId]);
 
   const shuffledAnswers = shuffle(currQuestion.answers.slice());
 
@@ -51,7 +57,7 @@ export const generateAndSetNewQuestion = () => (dispatch, getState) => {
 export const setIncorrectAnswerText = (text) => ({ type: 'SET_INCORRECT_ANSWER_TEXT', text });
 
 export const answerAndPersist = (id, isCorrect, milliseconds, answerText) => dispatch => {
-  dispatch(answer(id, isCorrect, milliseconds));
+  dispatch(answer(id, isCorrect));
   dispatch(persistAnswer(id, isCorrect, milliseconds));
 
   if (isCorrect) {
@@ -93,4 +99,15 @@ function getTotalCalc(totalCorrect, totalAnswered) {
   const correctAnswersCalc = (totalCorrect / totalAnswered) * 1;
 
   return correctAnswersCalc;
+}
+
+function getRemainingQuestions(state) {
+  const questionBankIds = Object.keys(state.questions);
+  if (questionBankIds.length > (state.correctAnswerIds.length + state.incorrectAnswerIds.length)) {
+    return questionBankIds.filter(id => {
+      return !state.correctAnswerIds.includes(id) && !state.incorrectAnswerIds.includes(id);
+    });
+  } else {
+    return state.incorrectAnswerIds.slice();
+  }
 }

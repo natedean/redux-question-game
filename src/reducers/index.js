@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import questions from './questions';
 import correctAnswerIds from './correctAnswerIds';
 import incorrectAnswerIds from './incorrectAnswerIds';
 import score from './score';
@@ -17,7 +18,7 @@ const todoApp = combineReducers({
   skill,
   isLimbo,
   incorrectAnswerText,
-  questions: (state = []) => state,
+  questions
 });
 
 export default todoApp;

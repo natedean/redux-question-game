@@ -1,26 +1,50 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import AnswerButtons from './AnswerButtons';
 
-const Question = ({ question, isLimbo, incorrectAnswerText, onAnswer, setNewQuestion }) => {
+class Question extends Component {
+  constructor(props) {
+    super(props);
+    this.onClick = this.onClick.bind(this);
+    this.milliseconds = 0;
+  }
 
-  // fake 1000 millisecond response for now
-  const onClick = (isCorrect, answerText) => onAnswer(question.id, isCorrect, 1000, answerText);
+  onClick(isCorrect, answerText) {
+    this.props.onAnswer(this.props.question.id, isCorrect, this.milliseconds, answerText)
+  }
 
-  return (
-    <div className={isLimbo ? '' : 'fadeIn'} >
-      <h5>{question.text}</h5>
-      <AnswerButtons
-        answers={question.answers}
-        isIncorrectLimbo={isLimbo && !!incorrectAnswerText}
-        incorrectAnswerText={incorrectAnswerText}
-        onClick={onClick}
-      />
-      { (isLimbo && incorrectAnswerText) && <button onClick={setNewQuestion} className="nextBtn">Next</button> }
-      { (isLimbo && incorrectAnswerText) && <div className="fadeIn">Incorrect.</div> }
-    </div>
-  )
-};
+  componentDidMount() {
+    this.interval = setInterval(() => this.milliseconds = this.milliseconds + 1);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.question.id !== nextProps.question.id) {
+      this.milliseconds = 0;
+    }
+  }
+
+  render() {
+    const { question, isLimbo, incorrectAnswerText, setNewQuestion } = this.props;
+
+    return (
+      <div className={isLimbo ? '' : 'fadeIn'} >
+        <h5>{question.text}</h5>
+        <AnswerButtons
+          answers={question.answers}
+          isIncorrectLimbo={isLimbo && !!incorrectAnswerText}
+          incorrectAnswerText={incorrectAnswerText}
+          onClick={this.onClick}
+        />
+        { (isLimbo && incorrectAnswerText) && <button onClick={setNewQuestion} className="nextBtn">Next</button> }
+        { (isLimbo && incorrectAnswerText) && <div className="fadeIn">Incorrect.</div> }
+      </div>
+    )
+  }
+}
 
 export default Question;
 
