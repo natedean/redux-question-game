@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-
+import PropShapes from '../constants/propShapes';
 import AnswerButtons from './AnswerButtons';
 
 class Question extends Component {
@@ -39,8 +39,8 @@ class Question extends Component {
           incorrectAnswerText={incorrectAnswerText}
           onClick={this.onClick}
         />
-        { (isLimbo && incorrectAnswerText) && <button onClick={setNewQuestion} className="nextBtn">Next</button> }
         { (isLimbo && incorrectAnswerText) && <div className="fadeIn">Incorrect.</div> }
+        { (isLimbo && incorrectAnswerText) && <button onClick={setNewQuestion} className="nextBtn">Next</button> }
       </div>
     )
   }
@@ -49,12 +49,6 @@ class Question extends Component {
 export default Question;
 
 Question.propTypes = {
-  question: PropTypes.shape({
-    text: PropTypes.string.isRequired,
-    answers: PropTypes.arrayOf(PropTypes.shape({
-      text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      isCorrect: PropTypes.bool
-    }).isRequired).isRequired
-  }).isRequired,
+  question: PropTypes.shape(PropShapes.question).isRequired,
   onAnswer: PropTypes.func.isRequired
 };

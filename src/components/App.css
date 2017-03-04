@@ -37,9 +37,6 @@
 }
 
 .nextBtn {
-  position: absolute;
-  bottom: -6rem;
-  left: 0;
   width: 100%;
   animation: slideUp 0.4s;
 }
