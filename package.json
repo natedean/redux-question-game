@@ -1,8 +1,9 @@
 {
-  "name": "test-game",
+  "name": "game",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "cheerio": "^0.22.0",
     "react-scripts": "0.8.5",
     "redux-devtools-extension": "^2.13.0"
   },
@@ -20,6 +21,7 @@
     "start": "REACT_APP_API_URI='https://api.guitarthinker.com' react-scripts start",
     "start:local-api": "REACT_APP_API_URI='http://localhost:3001' react-scripts start",
     "build": "REACT_APP_API_URI='https://api.guitarthinker.com' react-scripts build",
+    "postbuild": "node transferFiles.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
