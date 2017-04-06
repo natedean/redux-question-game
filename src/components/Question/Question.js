@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import PropShapes from '../../constants/propShapes';
+import { questionShape } from '../../constants/propShapes';
 import AnswerButtons from '../AnswerButtons/AnswerButtons';
 import Helpers from '../Helpers/Helpers';
 import './Question.css';
@@ -51,6 +51,9 @@ class Question extends Component {
 export default Question;
 
 Question.propTypes = {
-  question: PropTypes.shape(PropShapes.question).isRequired,
+  question: questionShape.isRequired,
+  isLimbo: PropTypes.bool.isRequired,
+  incorrectAnswerText: PropTypes.string,
+  setNewQuestion: PropTypes.func.isRequired,
   onAnswer: PropTypes.func.isRequired
 };
