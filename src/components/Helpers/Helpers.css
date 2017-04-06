@@ -1,0 +1,16 @@
+.helpers {
+  margin-top: 1em;
+}
+
+.helpers__textLine {
+  margin-bottom: 1em;
+}
+
+.helpers__diagramsContainer {
+  display: flex;
+
+}
+
+.helpers__diagram {
+  flex: 1;
+}

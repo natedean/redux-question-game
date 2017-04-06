@@ -1,6 +1,6 @@
 import React from 'react';
-import ScoreDisplay from '../containers/ScoreDisplay';
-import CurrentQuestion from '../containers/CurrentQuestion';
+import ScoreDisplay from '../../containers/ScoreDisplay';
+import CurrentQuestion from '../../containers/CurrentQuestion';
 import './App.css';
 
 const App = () => (

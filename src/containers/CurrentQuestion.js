@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { answerAndPersist, generateAndSetNewQuestion } from '../actions/index';
-import Question from '../components/Question';
+import Question from '../components/Question/Question';
 
 const mapStateToProps = (state) => ({
   question: state.currentQuestion,

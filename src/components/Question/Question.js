@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import PropShapes from '../constants/propShapes';
-import AnswerButtons from './AnswerButtons';
+import PropShapes from '../../constants/propShapes';
+import AnswerButtons from '../AnswerButtons/AnswerButtons';
+import Helpers from '../Helpers/Helpers';
+import './Question.css';
 
 class Question extends Component {
   constructor(props) {
@@ -31,7 +33,7 @@ class Question extends Component {
     const { question, isLimbo, incorrectAnswerText, setNewQuestion } = this.props;
 
     return (
-      <div className={isLimbo ? '' : 'fadeIn'} >
+      <div className={isLimbo ? 'question' : 'question fadeIn'} >
         <h5>{question.text}</h5>
         <AnswerButtons
           answers={question.answers}
@@ -39,8 +41,8 @@ class Question extends Component {
           incorrectAnswerText={incorrectAnswerText}
           onClick={this.onClick}
         />
-        { (isLimbo && incorrectAnswerText) && <div className="fadeIn">Incorrect.</div> }
-        { (isLimbo && incorrectAnswerText) && <button onClick={setNewQuestion} className="nextBtn">Next</button> }
+        { (isLimbo && incorrectAnswerText) && <Helpers helpers={question.helpers} /> }
+        { (isLimbo && incorrectAnswerText) && <button onClick={setNewQuestion} className="question__nextBtn">Next</button> }
       </div>
     )
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import App from './components/App';
+import App from './components/App/App';
 import store from './configureStore';
 import { setQuestionsBank, generateAndSetNewQuestion } from './actions';
 
@@ -17,9 +17,16 @@ console.log('current uri', process.env.REACT_APP_API_URI);
 fetch(`${process.env.REACT_APP_API_URI}/questions`)
   .then(res => res.json())
   .then(questions => {
-  store.dispatch(setQuestionsBank(questions));
-  store.dispatch(generateAndSetNewQuestion());
-});
+
+    // TESTING
+    const filteredQuestions = questions.filter(question => question.helpers);
+    store.dispatch(setQuestionsBank(filteredQuestions));
+    // end testing
+
+    // uncomment after testing
+    // store.dispatch(setQuestionsBank(questions));
+    store.dispatch(generateAndSetNewQuestion());
+  });
 
 render(
   <Provider store={store}>
