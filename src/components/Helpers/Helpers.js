@@ -1,13 +1,14 @@
 import React from 'react';
 import './Helpers.css';
 import StaffDiagram from '../StaffDiagram/StaffDiagram';
+import TextDiagram from '../TextDiagram/TextDiagram';
 import { helpersShape } from '../../constants/propShapes';
 
 const Helpers = ({ helpers }) => {
   return (
     <div className="helpers">
       <p className="helpers__textLine"><strong>Your guess was incorrect.</strong></p>
-      { helpers.text.map((line, i) => <p key={i} className="helpers__textLine">{line}</p>) }
+      { <p className="helpers__textLine">{helpers.text}</p> }
       <div className="helpers__diagramsContainer">
         { helpers.diagrams.map((diagram, i) => {
           return (
@@ -26,13 +27,14 @@ Helpers.propTypes = {
 };
 
 function renderDiagram(diagram) {
-
   switch (diagram.type) {
     case 'staff':
       return <StaffDiagram diagram={diagram}/>;
     case 'guitar':
       return <div>I am a guitar diagram</div>;
+    case 'text':
+      return <TextDiagram diagram={diagram}/>;
     default:
-      return <div>No diagram for this type.</div>
+      return <div>No diagram for this type</div>
   }
 }

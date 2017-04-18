@@ -13,9 +13,15 @@ export const guitarDiagramShape = PropTypes.shape({
     })).isRequired
 });
 
+export const textDiagramShape = PropTypes.shape({
+  type: PropTypes.oneOf(['text']).isRequired,
+  notes: PropTypes.string.isRequired,
+  tones: PropTypes.string.isRequired
+});
+
 export const helpersShape = PropTypes.shape({
-  text: PropTypes.arrayOf(PropTypes.string).isRequired,
-  diagrams: PropTypes.arrayOf(PropTypes.oneOfType([staffDiagramShape, guitarDiagramShape]))
+  text: PropTypes.string.isRequired,
+  diagrams: PropTypes.arrayOf(PropTypes.oneOfType([textDiagramShape, staffDiagramShape, guitarDiagramShape]))
 });
 
 export const questionShape = PropTypes.shape({

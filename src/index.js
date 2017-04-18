@@ -20,6 +20,7 @@ fetch(`${process.env.REACT_APP_API_URI}/questions`)
 
     // TESTING
     const filteredQuestions = questions.filter(question => question.helpers);
+
     store.dispatch(setQuestionsBank(filteredQuestions));
     // end testing
 
