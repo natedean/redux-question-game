@@ -1,12 +1,28 @@
 import { PropTypes } from 'react';
+import { DIAGRAM_TYPES } from './index';
+
+export const staffNoteShape = PropTypes.shape({
+  pitch: PropTypes.string.isRequired,
+  tone: PropTypes.string.isRequired
+});
+
+export const guitarNoteShape = PropTypes.shape({
+  fret: PropTypes.number.isRequired,
+  string: PropTypes.number.isRequired
+});
 
 export const staffDiagramShape = PropTypes.shape({
   type: PropTypes.string.isRequired,
-  notes: PropTypes.arrayOf(PropTypes.string).isRequired
+  notes: PropTypes.arrayOf(staffNoteShape).isRequired
+});
+
+export const staffScaleDiagramShape = PropTypes.shape({
+  type: PropTypes.oneOf(DIAGRAM_TYPES).isRequired,
+  notes:PropTypes.arrayOf(staffNoteShape).isRequired
 });
 
 export const guitarDiagramShape = PropTypes.shape({
-  type: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(DIAGRAM_TYPES).isRequired,
   notes: PropTypes.arrayOf(PropTypes.shape({
       string: PropTypes.number.isRequired,
       fret: PropTypes.number.isRequired
@@ -14,9 +30,9 @@ export const guitarDiagramShape = PropTypes.shape({
 });
 
 export const textDiagramShape = PropTypes.shape({
-  type: PropTypes.oneOf(['text']).isRequired,
-  notes: PropTypes.string.isRequired,
-  tones: PropTypes.string.isRequired
+  type: PropTypes.oneOf(DIAGRAM_TYPES).isRequired,
+  tones: PropTypes.string.isRequired,
+  notes: PropTypes.string.isRequired
 });
 
 export const helpersShape = PropTypes.shape({
